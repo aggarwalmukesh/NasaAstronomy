@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">WmartNasaApp</string>
+    <string name="NASA_API_KEY">vT99zqMDFSxLT8UebC4FUMcvLpGWOWLek3Ix8xAA</string>
 </resources>
