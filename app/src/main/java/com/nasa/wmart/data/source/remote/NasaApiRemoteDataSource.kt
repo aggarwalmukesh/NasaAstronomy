@@ -1,17 +1,22 @@
 package com.nasa.wmart.data.source.remote
 
+import android.content.SharedPreferences
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import com.nasa.wmart.NasaApplication
 import com.nasa.wmart.data.source.NasaApiDataSource
 import com.nasa.wmart.model.NasaInfo
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class NasaApiRemoteDataSource : NasaApiDataSource {
+
+class NasaApiRemoteDataSource(private val sharedPreferences: SharedPreferences) :
+    NasaApiDataSource {
     private var mutableLiveData: MutableLiveData<NasaInfo> = MutableLiveData()
 
     override fun fetchNasaApodData() {
+
         val apiEndPoints = RemoteClient.getRetrofitInstance()?.create(ApiEndPoints::class.java)
 
         apiEndPoints?.getNasaInfo(NASA_API_KEY)?.enqueue(object : Callback<NasaInfo> {
@@ -19,12 +24,22 @@ class NasaApiRemoteDataSource : NasaApiDataSource {
                 call: Call<NasaInfo>,
                 response: Response<NasaInfo>
             ) {
-                Log.v(TAG, "onResoponse "+ response.body());
-                mutableLiveData.postValue(response.body())
+                var nasaInfo = response.body()
+                Log.v(TAG, "onResoponse " + nasaInfo)
+                if (response.body() != null) {
+                    //              db?.nasaDao()?.insertNasaInfo(response.body()!!)
+                    sharedPreferences.edit().apply {
+                        putString(NasaApplication.URL, nasaInfo?.url)
+                        putString(NasaApplication.TITLE, nasaInfo?.title)
+                        putString(NasaApplication.DESCRIPTION, nasaInfo?.explanation)
+                        apply()
+                    }
+                    mutableLiveData.postValue(response.body())
+                }
             }
 
             override fun onFailure(call: Call<NasaInfo>, t: Throwable) {
-                //mutableLiveData.value =
+                mutableLiveData.postValue(null)
                 Log.v(TAG, "onFailure");
             }
 

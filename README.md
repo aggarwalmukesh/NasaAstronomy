@@ -7,3 +7,5 @@ Architecture Followed:
 3Rd Party Api Used:
 - Retrofit
 - Picasso
+- Room Database
+- Coroutines
