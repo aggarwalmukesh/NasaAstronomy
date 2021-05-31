@@ -9,3 +9,6 @@ Architecture Followed:
 - Picasso
 - Room Database
 - Coroutines
+
+
+-- screenshot attached at root leve of project // screenshot.png
