@@ -1,2 +1,14 @@
 # NasaAstronomy
 To Display latest picture which Nasa release using their API's
+
+Architecture Followed:
+- MVVM
+
+3Rd Party Api Used:
+- Retrofit
+- Picasso
+- Room Database
+- Coroutines
+
+
+-- screenshot attached at root leve of project // screenshot.png
