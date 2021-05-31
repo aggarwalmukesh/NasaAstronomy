@@ -6,7 +6,7 @@ import com.nasa.wmart.model.NasaInfo
 
 class NasaApiLocalDataSource : NasaApiDataSource {
 
-    override fun fetchNasaApodData(): MutableLiveData<NasaInfo>? {
-        return null
+    override fun fetchNasaApodData(){
+
     }
 }
